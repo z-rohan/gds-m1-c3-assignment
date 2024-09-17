@@ -3,6 +3,7 @@ import boto3
 from io import StringIO
 
 def lambda_handler(event, context):
+    print(event)
     # creating sns client
     sns_client = boto3.client('sns')
 
