@@ -21,17 +21,17 @@ def lambda_handler(event, context):
     s3_client = boto3.client('s3')
 
     # reading the file into dataframe
-    target_key = 'doordash-target-zn/' + key.split('/')[-1]
-    response = s3_client.get_object(Bucket=bucket, Key=target_key)
+    response = s3_client.get_object(Bucket=bucket, Key=key)
     file_content = response["Body"].read().decode('utf-8')
     df = pd.read_json(StringIO(file_content))
     # filtering 
     df = df[df['status']=='delivered']
     # saving file to target folder
     print(df)
+    target_key = 'doordash-target-zn/' + key.split('/')[-1]
     df_json = df.to_json(orient = 'records', date_format = 'iso' )
     print(df_json)
-    s3_client.put_object(Body = df_json,Bucket = bucket, Key = key)
+    s3_client.put_object(Body = df_json,Bucket = bucket, Key = target_key)
     print(f">>>>>>>>>>>>>>>>>SUCCESS<<<<<<<<<<<<<<<")
 
     # File proccessed message delievering 
