@@ -27,8 +27,11 @@ def lambda_handler(event, context):
     # filtering 
     df = df[df['status']=='delivered']
     # saving file to target folder
+    print(df)
     df_json = df.to_json(orient = 'records', date_format = 'iso' )
+    print(df_json)
     s3_client.put_object(Body = df_json,Bucket = bucket, Key = key)
+    print(f">>>>>>>>>>>>>>>>>SUCCESS<<<<<<<<<<<<<<<")
 
     # File proccessed message delievering 
     sns_client.publish(TopicArn = topic_arn, Subject = f'File processed', 
