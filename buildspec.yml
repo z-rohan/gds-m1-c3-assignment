@@ -13,6 +13,6 @@ phases:
     commands:
       - echo "Uploading to S3..."
       - aws s3 cp deployment_package_assign.zip s3://lambda-builds-zip170/
-      - echo "Updating Lambda function via S3!!!"
-      - aws lambda update-function-code --function-name gds-m1-c3-assignment --s3-bucket lambda-builds-zip170 --s3-key deployment_package.zip
+      - echo "Updating Lambda function via S3..."
+      - aws lambda update-function-code --function-name arn:aws:lambda:us-east-1:699475915241:function:gds-m1-c3-assignment --s3-bucket lambda-builds-zip170 --s3-key deployment_package.zip
       - echo "Deployment complete!"
