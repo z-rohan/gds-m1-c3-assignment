@@ -13,7 +13,7 @@ def lambda_handler(event, context):
     # publishing file arrival email 
     # topic_arn = 'arn:aws:sns:us-east-1:699475915241:gds-m1-c3-assigment-sns'
     subscriber_arn = 'arn:aws:sns:us-east-1:699475915241:gds-m1-c3-assigment-sns:a8cb396b-e012-43c1-9db9-4f109542199a'
-    sns_client.publish(TargetArn = subscriber_arn, Subject = f'File arrived', 
+    sns_client.publish(TopicArn = subscriber_arn, Subject = f'File arrived', 
                        Message = f'File arrived in {bucket} with name as {key}')
 
     # creating s3 client 
@@ -31,5 +31,5 @@ def lambda_handler(event, context):
     s3_client.put_object(Body = df_json,Bucket = bucket, Key = key)
 
     # File proccessed message delievering 
-    sns_client.publish(TargetArn = subscriber_arn, Subject = f'File processed', 
+    sns_client.publish(TopicArn = subscriber_arn, Subject = f'File processed', 
                        Message = f'File arrived in {bucket} with name as {target_key}')
